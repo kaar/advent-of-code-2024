@@ -30,6 +30,7 @@ def part_2(l_values, r_values):
 
 
 def main():
+    # cat input.txt | ./1.py
     # Read from stdin
     # https://adventofcode.com/2024/day/1/input
     l_values = []
