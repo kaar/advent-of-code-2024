@@ -1,3 +1,4 @@
+#!/usr/bin/env -S uv run
 import sys
 
 
@@ -29,6 +30,7 @@ def part_2(l_values, r_values):
 
 def main():
     # Read from stdin
+    # https://adventofcode.com/2024/day/1/input
     l_values = []
     r_values = []
     for line in sys.stdin:
