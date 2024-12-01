@@ -1,4 +1,5 @@
 #!/usr/bin/env -S uv run
+# https://docs.astral.sh/uv/guides/scripts
 import sys
 
 
