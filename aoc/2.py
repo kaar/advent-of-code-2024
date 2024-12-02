@@ -45,7 +45,6 @@ def part_2(reports):
 def main():
     # Read from stdin
     # https://adventofcode.com/2024/day/2/input
-    # https://adventofcode.com/2024/day/1/input
     reports = []
     for line in sys.stdin:
         levels = [int(x) for x in line.strip().split()]
