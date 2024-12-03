@@ -2,6 +2,20 @@
 import sys
 
 
+def is_safe(levels: list[int]):
+    distances = []
+    for x, y in zip(levels, levels[1:]):
+        distance = x - y
+        if abs(distance) < 1 or abs(distance) > 3:
+            return False
+        if distances and distance * distances[-1] < 0:
+            # Checks that they are all moving in the same direction
+            # by looking that all accepted distances has the same sign
+            return False
+        distances.append(distance)
+    return True
+
+
 def part_1(reports):
     safe_count = 0
     for levels in reports:
@@ -27,6 +41,10 @@ def part_1_alt(reports):
     print(safe_count)
 
 
+def part_1_alt_2(report):
+    print(sum(is_safe(levels) for levels in report))
+
+
 def part_2(reports):
     safe_count = 0
     for levels in reports:
@@ -50,7 +68,7 @@ def main():
         levels = [int(x) for x in line.strip().split()]
         reports.append(levels)
 
-    part_2(reports)
+    part_1_alt_2(reports)
 
 
 if __name__ == "__main__":
