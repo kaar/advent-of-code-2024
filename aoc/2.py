@@ -3,17 +3,12 @@ import sys
 
 
 def is_safe(levels: list[int]):
-    distances = []
-    for x, y in zip(levels, levels[1:]):
-        distance = x - y
-        if abs(distance) < 1 or abs(distance) > 3:
-            return False
-        if distances and distance * distances[-1] < 0:
-            # Checks that they are all moving in the same direction
-            # by looking that all accepted distances has the same sign
-            return False
-        distances.append(distance)
-    return True
+    safe_distances = [x - y for x, y in zip(levels, levels[1:]) if 1 <= abs(x - y) <= 3]
+    all_distances_safe = len(levels) - 1 == len(safe_distances)
+    # If max is negative, they are all negative.
+    all_negative = max(safe_distances) < 0
+    all_positive = min(safe_distances) > 0
+    return all_distances_safe and (all_negative or all_positive)
 
 
 def part_1(reports):
