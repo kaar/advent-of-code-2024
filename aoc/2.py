@@ -3,12 +3,21 @@ import sys
 
 
 def is_safe(levels: list[int]):
-    safe_distances = [x - y for x, y in zip(levels, levels[1:]) if 1 <= abs(x - y) <= 3]
-    all_distances_safe = len(levels) - 1 == len(safe_distances)
-    # If max is negative, they are all negative.
-    all_negative = max(safe_distances) < 0
-    all_positive = min(safe_distances) > 0
-    return all_distances_safe and (all_negative or all_positive)
+    going_up = 1 if levels[0] > levels[1] else -1
+    for x, y in zip(levels, levels[1:]):
+        distance = (x - y) * going_up
+        if 1 <= distance <= 3:
+            continue
+        return False
+    return True
+
+
+def is_safe_with_damp(levels):
+    for i in range(len(levels)):
+        if is_safe(levels[:i] + levels[i + 1 :]):
+            return True
+
+    return False
 
 
 def part_1(reports):
@@ -41,18 +50,7 @@ def part_1_alt_2(report):
 
 
 def part_2(reports):
-    safe_count = 0
-    for levels in reports:
-        distances = [x - y for x, y in zip(levels, levels[1:])]
-        safe_distances = len([x for x in distances if abs(x) in [1, 2, 3]])
-        if safe_distances >= len(distances) - 1:
-            increase_count = len([x for x in distances if x > 0])
-            if increase_count >= len(distances) - 1:
-                safe_count += 1
-            decrease_count = len([x for x in distances if x < 0])
-            if decrease_count >= len(distances) - 1:
-                safe_count += 1
-    print(safe_count)
+    print(sum(is_safe_with_damp(levels) for levels in reports))
 
 
 def main():
@@ -63,7 +61,7 @@ def main():
         levels = [int(x) for x in line.strip().split()]
         reports.append(levels)
 
-    part_1_alt_2(reports)
+    part_2(reports)
 
 
 if __name__ == "__main__":
