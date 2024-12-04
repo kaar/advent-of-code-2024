@@ -12,6 +12,15 @@ def is_safe(levels: list[int]):
     return True
 
 
+def is_safe_fast(levels: list[int]):
+    direction = 1 if levels[0] > levels[1] else -1
+    safe_distances = [
+        x - y for x, y in zip(levels, levels[1:]) if 1 <= (x - y) * direction <= 3
+    ]
+
+    return len(safe_distances) == len(levels) - 1
+
+
 def is_safe_with_damp(levels):
     for i in range(len(levels)):
         if is_safe(levels[:i] + levels[i + 1 :]):
