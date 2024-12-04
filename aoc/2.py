@@ -21,14 +21,6 @@ def is_safe_fast(levels: list[int]):
     return len(safe_distances) == len(levels) - 1
 
 
-def is_safe_with_damp(levels):
-    for i in range(len(levels)):
-        if is_safe(levels[:i] + levels[i + 1 :]):
-            return True
-
-    return False
-
-
 def part_1(reports):
     safe_count = 0
     for levels in reports:
@@ -59,7 +51,13 @@ def part_1_alt_2(report):
 
 
 def part_2(reports):
-    print(sum(is_safe_with_damp(levels) for levels in reports))
+    safe_count = 0
+    for levels in reports:
+        for i in range(len(levels)):
+            if is_safe_fast(levels[:i] + levels[i + 1 :]):
+                safe_count += 1
+                break
+    print(safe_count)
 
 
 def main():
